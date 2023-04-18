@@ -1,0 +1,17 @@
+// Not deployed, IP collision in current state
+version: "3"
+services:
+  tailscale:
+    container_name: tailscale
+    restart: unless-stopped
+    privileged: true
+    image: tailscale/tailscale:latest
+    environment:
+      - "TS_AUTH_KEY=${TAILSCALEAUTHKEY}"
+      - "TS_ROUTES=192.168.1.0/24"
+      - "TS_EXTRA_ARGS=--advertise-exit-node"
+    networks:
+      macvlan:
+        ipv4_address: 192.168.1.4
+      vlan_bridge:
+        ipv4_address: 192.168.10.4
