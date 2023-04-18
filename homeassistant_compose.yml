@@ -122,6 +122,7 @@ networks:
 # Located under /var/lib/docker/volumes
 volumes:
   homeassistant_data:
+    external: true
     name: homeassistant_data
   vscode_config:
     name: vscode_config
