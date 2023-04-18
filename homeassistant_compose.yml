@@ -1,0 +1,135 @@
+version: "3"
+services:
+  homeassistant:
+    container_name: homeassistant
+    hostname: HomeAssistant
+    image: "ghcr.io/home-assistant/home-assistant:stable"
+    volumes:
+      - homeassistant_data:/config
+      - /etc/localtime:/etc/localtime:ro
+      - /etc/letsencrypt:/config/letsencrypt/:ro
+      - /dev/bus/usb:/dev/bus/usb
+    restart: unless-stopped
+    privileged: true
+    group_add:
+      - "1001"
+    networks:
+      macvlan:
+        ipv4_address: 192.168.1.5 # this IP will show as a device on your router
+      vlan_bridge:
+        ipv4_address: 192.168.10.5 # same as macvlan (.5) and use "vlan bridge subnet" (10)
+
+  esphome:
+    container_name: esphome
+    image: esphome/esphome
+    volumes:
+      - esphome_config:/config
+      - homeassistant_data:/config/workspace
+      - /etc/localtime:/etc/localtime:ro
+      - /dev/bus/usb:/dev/bus/usb
+    ports:
+      - 6052:6052
+    restart: unless-stopped
+    group_add:
+      - "1001"
+    privileged: true
+    network_mode: host
+  
+  vscode:
+    container_name: vscode
+    image: linuxserver/code-server:latest
+    restart: unless-stopped
+    volumes:
+      - homeassistant_data:/config/workspace
+      - vscode_config:/config
+      - /etc/letsencrypt:/config/letsencrypt/:ro
+    ports:
+      - 8443:8443
+    environment:
+      - "PASSWORD=${VSCODE_PASSWORD}"
+      - "SUDO_PASSWORD=${VSCODE_SUDOPASSWORD}"
+      #- PUID=1011
+      - PGID=1001
+      - DEFAULT_WORKSPACE=/config/workspace
+      - CERT=/config/letsencrypt/archive/storage.thomashillyer.com/fullchain.pem
+      - CERT_KEY=/config/letsencrypt/archive/storage.thomashillyer.com/privkey.pem
+      - BIND_ADDR=https://storage.thomashillyer.com:8443
+    privileged: true
+    network_mode: host
+    
+  mqtt:
+    container_name: mqtt
+    restart: unless-stopped
+    image: eclipse-mosquitto:latest
+    volumes:
+        - mosquitto_config:/mosquitto/config
+        - mosquitto_log:/mosquitto/log
+        - mosquitto_data:/mosquitto/data
+        - /etc/localtime:/etc/localtime:ro
+    privileged: true
+    group_add:
+      - "1001"
+    #network_mode: host
+    ports:
+      - 1883:1883
+      - 8883:8883
+    networks:
+      macvlan:
+        ipv4_address: 192.168.1.7 # this IP will show as a device on your router
+      vlan_bridge:
+        ipv4_address: 192.168.10.7 # same as macvlan (.9) and use "vlan bridge subnet" (10)
+
+#  wyze-bridge:
+#    container_name: wyze-bridge
+#    restart: unless-stopped
+#    image: mrlt8/wyze-bridge:latest
+#    ports:
+#      - 1935:1935 # RTMP
+#      - 8554:8554 # RTSP
+#      - 8888:8888 # HLS
+#      - 5000:5000 # WEB-UI
+#    environment:
+#      - "WYZE_EMAIL=${WYZE_USER}" 
+#      - "WYZE_PASSWORD=${WYZE_PASSWORD}"
+#      - RTSP_READTIMEOUT=15
+
+# Here we define what networks are available to use by the services above
+# Make sure to set the config of both macvlan and vlan_bridge as described in the guide.
+networks:
+  macvlan:
+    name: docker_macvlan
+    driver: macvlan
+    enable_ipv6: false
+    driver_opts:
+      parent: eth0
+    ipam:
+      config:
+        - subnet: 192.168.1.0/24 # Set to same subnet as your router and other devices
+          ip_range: 192.168.1.10/27 # Available range from 192-224
+          gateway: 192.168.1.1 # This is your router IP
+
+  vlan_bridge:
+    name: docker_vlan_bridge
+    driver: bridge
+    enable_ipv6: false
+    ipam:
+      config:
+        - subnet: 192.168.10.0/24 # subnet for all containers 
+          ip_range: 192.168.10.10/27 # for easier use, set to same range as under macvlan (192 to 224 here)
+          gateway: 192.168.10.1 # for easier use, set to same last number as your router (1)
+
+# Here we define where to save the files that live outside the container
+# Located under /var/lib/docker/volumes
+volumes:
+  homeassistant_data:
+    name: homeassistant_data
+  vscode_config:
+    name: vscode_config
+  esphome_config:
+    name: esphome_config
+  mosquitto_data:
+    name: mosquitto_data
+  mosquitto_config:
+    name: mosquitto_config
+  mosquitto_log:
+    name: mosquitto_log
