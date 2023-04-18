@@ -18,9 +18,9 @@ services:
       - adguard_conf:/opt/adguardhome/conf
     networks:
       macvlan:
-        ipv4_address: 192.168.1.192 # this IP will show as a device on your router
+        ipv4_address: 192.168.1.4 # this IP will show as a device on your router
       vlan_bridge:
-        ipv4_address: 192.168.10.192 # same as macvlan (192) and use "vlan bridge subnet" (10)
+        ipv4_address: 192.168.10.4 # same as macvlan (192) and use "vlan bridge subnet" (10)
     restart: unless-stopped
 
   portainer:
@@ -53,7 +53,7 @@ networks:
     ipam:
       config:
         - subnet: 192.168.1.0/24 # Set to same subnet as your router and other devices
-          ip_range: 192.168.1.192/27 # Available range from 192-224
+          ip_range: 192.168.1.10/27 # Available range from 192-224
           gateway: 192.168.1.1 # This is your router IP
 
   vlan_bridge:
@@ -63,5 +63,5 @@ networks:
     ipam:
       config:
         - subnet: 192.168.10.0/24 # subnet for all containers
-          ip_range: 192.168.10.192/27 # for easier use, set to same range as under macvlan (192 to 224 here)
+          ip_range: 192.168.10.10/27 # for easier use, set to same range as under macvlan (192 to 224 here)
           gateway: 192.168.10.1 # for easier use, set to same last number as your router (1)
