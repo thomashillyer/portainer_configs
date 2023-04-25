@@ -129,12 +129,17 @@ volumes:
     external: true
     name: homeassistant_data
   vscode_config:
+    external: true
     name: vscode_config
   esphome_config:
+    external: true
     name: esphome_config
   mosquitto_data:
+    external: true
     name: mosquitto_data
   mosquitto_config:
+    external: true
     name: mosquitto_config
   mosquitto_log:
+    external: true
     name: mosquitto_log
