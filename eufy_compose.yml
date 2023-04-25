@@ -18,7 +18,7 @@ services:
       - docker_macvlan:
           ipv4_address: 192.168.1.10 # this IP will show as a device on your router
       - docker_vlan_bridge:
-          ipv4_address: 192.168.10.10 # this IP will show as a device on your router
+          ipv4_address: 192.168.10.10 # same as macvlan (.10) and use "vlan bridge subnet" (10)
 
   rtsp:
     container_name: rtsp-simple-server
