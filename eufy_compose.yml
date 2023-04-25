@@ -15,8 +15,10 @@ services:
     ports:
       - 3000:3000
     networks:
-      - docker_macvlan
-      - docker_vlan_bridge
+      - docker_macvlan:
+          ipv4_address: 192.168.1.10 # this IP will show as a device on your router
+      - docker_vlan_bridge:
+          ipv4_address: 192.168.10.10 # this IP will show as a device on your router
 
   rtsp:
     container_name: rtsp-simple-server
