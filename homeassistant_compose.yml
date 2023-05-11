@@ -55,8 +55,8 @@ services:
       #- PUID=1011
       - PGID=1001
       - DEFAULT_WORKSPACE=/config/workspace
-      - CERT=/config/letsencrypt/archive/storage.thomashillyer.com/fullchain.pem
-      - CERT_KEY=/config/letsencrypt/archive/storage.thomashillyer.com/privkey.pem
+      - CERT=/config/letsencrypt/live/thomashillyer.com/fullchain.pem
+      - CERT_KEY=/config/letsencrypt/live/thomashillyer.com/privkey.pem
       - BIND_ADDR=https://storage.thomashillyer.com:8443
     privileged: true
     network_mode: host
