@@ -39,27 +39,27 @@ services:
       vlan_bridge:
         ipv4_address: 192.168.10.12 # same as macvlan (.12) and use "vlan bridge subnet" (10)
   
-  vscode:
-    container_name: vscode
-    image: linuxserver/code-server:latest
-    restart: unless-stopped
-    volumes:
-      - homeassistant_data:/config/workspace
-      - vscode_config:/config
-      - /etc/letsencrypt:/config/letsencrypt/:ro
-    ports:
-      - 8443:8443
-    environment:
-      - "PASSWORD=${VSCODE_PASSWORD}"
-      - "SUDO_PASSWORD=${VSCODE_SUDOPASSWORD}"
-      #- PUID=1011
-      - PGID=1001
-      - DEFAULT_WORKSPACE=/config/workspace
-      - CERT=/config/letsencrypt/live/thomashillyer.com/fullchain.pem
-      - CERT_KEY=/config/letsencrypt/live/thomashillyer.com/privkey.pem
-      - BIND_ADDR=https://storage.thomashillyer.com:8443
-    privileged: true
-    network_mode: host
+  # vscode:
+  #   container_name: vscode
+  #   image: linuxserver/code-server:latest
+  #   restart: unless-stopped
+  #   volumes:
+  #     - homeassistant_data:/config/workspace
+  #     - vscode_config:/config
+  #     - /etc/letsencrypt:/config/letsencrypt/:ro
+  #   ports:
+  #     - 8443:8443
+  #   environment:
+  #     - "PASSWORD=${VSCODE_PASSWORD}"
+  #     - "SUDO_PASSWORD=${VSCODE_SUDOPASSWORD}"
+  #     #- PUID=1011
+  #     - PGID=1001
+  #     - DEFAULT_WORKSPACE=/config/workspace
+  #     - CERT=/config/letsencrypt/live/thomashillyer.com/fullchain.pem
+  #     - CERT_KEY=/config/letsencrypt/live/thomashillyer.com/privkey.pem
+  #     - BIND_ADDR=https://storage.thomashillyer.com:8443
+  #   privileged: true
+  #   network_mode: host
     
   mqtt:
     container_name: mqtt
@@ -128,9 +128,6 @@ volumes:
   homeassistant_data:
     external: true
     name: homeassistant_data
-  vscode_config:
-    external: true
-    name: vscode_config
   esphome_config:
     external: true
     name: esphome_config
@@ -143,3 +140,6 @@ volumes:
   mosquitto_log:
     external: true
     name: mosquitto_log
+  # vscode_config:
+  #   external: true
+  #   name: vscode_config
