@@ -3,7 +3,7 @@ services:
   homeassistant:
     container_name: homeassistant
     hostname: HomeAssistant
-    image: "home-assistant/home-assistant"
+    image: "homeassistant/home-assistant"
     volumes:
       - homeassistant_data:/config
       - /etc/localtime:/etc/localtime:ro
