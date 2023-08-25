@@ -126,19 +126,14 @@ networks:
 # Located under /var/lib/docker/volumes
 volumes:
   homeassistant_data:
-    external: true
     name: homeassistant_data
   esphome_config:
-    external: true
     name: esphome_config
   mosquitto_data:
-    external: true
     name: mosquitto_data
   mosquitto_config:
-    external: true
     name: mosquitto_config
   mosquitto_log:
-    external: true
     name: mosquitto_log
   # vscode_config:
   #   external: true
