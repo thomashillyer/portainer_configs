@@ -32,6 +32,11 @@ services:
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
       - portainer_data:/data
+    networks:
+      macvlan:
+        ipv4_address: 192.168.1.6 # this IP will show as a device on your router
+      vlan_bridge:
+        ipv4_address: 192.168.10.6 # same as macvlan (192) and use "vlan bridge subnet" (10)
 
 volumes:
   portainer_data:
