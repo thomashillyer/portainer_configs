@@ -21,7 +21,7 @@ services:
 
   esphome:
     container_name: esphome
-    image: esphome/esphome-armv7:latest
+    image: esphome/esphome:latest
     volumes:
       - esphome_config:/config
       - homeassistant_data:/config/workspace
