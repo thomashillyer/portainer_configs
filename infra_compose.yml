@@ -18,25 +18,26 @@ services:
       - adguard_conf:/opt/adguardhome/conf
     networks:
       macvlan:
-        ipv4_address: 192.168.1.4 # this IP will show as a device on your router
+        ipv4_address: 10.0.1.4 # this IP will show as a device on your router
       vlan_bridge:
-        ipv4_address: 192.168.10.4 # same as macvlan (192) and use "vlan bridge subnet" (10)
+        ipv4_address: 10.0.10.4 # same as macvlan (192) and use "vlan bridge subnet" (10)
     restart: unless-stopped
 
   portainer:
     container_name: portainer
-    image: portainer/portainer-ce:latest
+    image: portainer/portainer-ee:latest
     restart: unless-stopped
-    ports:
-      - 9000:9000
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
       - portainer_data:/data
+    ports:
+      - 8000:8000
+      - 9443:9443
     networks:
       macvlan:
-        ipv4_address: 192.168.1.6 # this IP will show as a device on your router
+        ipv4_address: 10.0.1.5 # this IP will show as a device on your router
       vlan_bridge:
-        ipv4_address: 192.168.10.6 # same as macvlan (192) and use "vlan bridge subnet" (10)
+        ipv4_address: 10.0.10.5 # same as macvlan (192) and use "vlan bridge subnet" (10)
 
 volumes:
   portainer_data:
@@ -57,9 +58,9 @@ networks:
       parent: eth0
     ipam:
       config:
-        - subnet: 192.168.1.0/24 # Set to same subnet as your router and other devices
-          ip_range: 192.168.1.10/27 # Available range from 192-224
-          gateway: 192.168.1.1 # This is your router IP
+        - subnet: 10.0.1.0/24 # Set to same subnet as your router and other devices
+          ip_range: 10.0.1.10/27 # Available range from 192-224
+          gateway: 10.0.1.1 # This is your router IP
 
   vlan_bridge:
     name: docker_vlan_bridge
@@ -67,6 +68,6 @@ networks:
     enable_ipv6: false
     ipam:
       config:
-        - subnet: 192.168.10.0/24 # subnet for all containers
-          ip_range: 192.168.10.10/27 # for easier use, set to same range as under macvlan (192 to 224 here)
-          gateway: 192.168.10.1 # for easier use, set to same last number as your router (1)
+        - subnet: 10.0.10.0/24 # subnet for all containers
+          ip_range: 10.0.10.10/27 # for easier use, set to same range as under macvlan (192 to 224 here)
+          gateway: 10.0.10.1 # for easier use, set to same last number as your router (1)
