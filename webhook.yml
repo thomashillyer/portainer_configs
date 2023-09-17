@@ -1,0 +1,21 @@
+services:
+  webhook:
+    image: thecatlady/webhook
+    container_name: webhook
+    command: -verbose -hooks=/config/hooks.json -hotreload
+    environment:
+      - TZ=America/New_York #optional
+    volumes:
+      - homeassistant_data:/config
+      - /home/pi/.ssh:/root/.ssh:ro
+    ports:
+      - 9000:9000
+    group_add:
+      - "1001"
+    restart: always
+    network_mode: host
+
+volumes:
+  homeassistant_data:
+    name: homeassistant_data
+    external: true
