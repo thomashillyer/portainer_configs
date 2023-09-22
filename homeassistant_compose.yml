@@ -95,9 +95,9 @@ services:
       - nodered_data:/data
     networks:
       macvlan:
-        ipv4_address: 10.0.10.12
-      vlan_bridge:
         ipv4_address: 10.0.1.12
+      vlan_bridge:
+        ipv4_address: 10.0.10.12
 
 #  wyze-bridge:
 #    container_name: wyze-bridge
