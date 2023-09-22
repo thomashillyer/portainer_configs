@@ -83,6 +83,22 @@ services:
       vlan_bridge:
         ipv4_address: 10.0.10.6 # same as macvlan (.6) and use "vlan bridge subnet" (10)
 
+  nodered:
+    container_name: nodered
+    restart: unless-stopped
+    image: nodered/node-red
+    ports:
+      - 1880:1880
+    group_add:
+      - "1001"
+    volumes:
+      - nodered_data:/data
+    networks:
+      macvlan:
+        ipv4_address: 10.0.10.12
+      vlan_bridge:
+        ipv4_address: 10.0.1.12
+
 #  wyze-bridge:
 #    container_name: wyze-bridge
 #    restart: unless-stopped
@@ -137,6 +153,8 @@ volumes:
     name: mosquitto_config
   mosquitto_log:
     name: mosquitto_log
+  nodered_data:
+    name: nodered_data
   # vscode_config:
   #   external: true
   #   name: vscode_config
