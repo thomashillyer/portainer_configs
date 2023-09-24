@@ -188,6 +188,13 @@ services:
         options:
             max-size: "10m"
             max-file: "10"
+    group_add:
+      - "1001"
+    networks:
+      macvlan:
+        ipv4_address: 10.0.1.17 # this IP will show as a device on your router
+      vlan_bridge:
+        ipv4_address: 10.0.10.17 # same as macvlan (.17) and use "vlan bridge subnet" (10)
 
   wyze-bridge:
     container_name: wyze-bridge
