@@ -58,29 +58,7 @@ services:
         ipv4_address: 10.0.1.13 # this IP will show as a device on your router
       vlan_bridge:
         ipv4_address: 10.0.10.13 # same as macvlan (.13) and use "vlan bridge subnet" (10)
-  
-  # vscode:
-  #   container_name: vscode
-  #   image: linuxserver/code-server:latest
-  #   restart: unless-stopped
-  #   volumes:
-  #     - homeassistant_data:/config/workspace
-  #     - vscode_config:/config
-  #     - /etc/letsencrypt:/config/letsencrypt/:ro
-  #   ports:
-  #     - 8443:8443
-  #   environment:
-  #     - "PASSWORD=${VSCODE_PASSWORD}"
-  #     - "SUDO_PASSWORD=${VSCODE_SUDOPASSWORD}"
-  #     #- PUID=1011
-  #     - PGID=1001
-  #     - DEFAULT_WORKSPACE=/config/workspace
-  #     - CERT=/config/letsencrypt/live/thomashillyer.com/fullchain.pem
-  #     - CERT_KEY=/config/letsencrypt/live/thomashillyer.com/privkey.pem
-  #     - BIND_ADDR=https://storage.thomashillyer.com:8443
-  #   privileged: true
-  #   network_mode: host
-    
+        
   mqtt:
     container_name: mqtt
     restart: unless-stopped
@@ -118,6 +96,7 @@ services:
         ipv4_address: 10.0.1.12
       vlan_bridge:
         ipv4_address: 10.0.10.12
+        
   scrypted:
     # environment:
         # Scrypted NVR Storage (Part 2 of 3)
@@ -203,15 +182,44 @@ services:
     restart: unless-stopped
     image: mrlt8/wyze-bridge:latest
     ports:
-     - 1935:1935 # RTMP
-     - 8554:8554 # RTSP
-     - 8888:8888 # HLS
-     - 5000:5000 # WEB-UI
+        - 1935:1935 # RTMP
+        - 8554:8554 # RTSP
+        - 8888:8888 # HLS
+        - 8889:8889 #WebRTC
+        - 8189:8189/udp # WebRTC/ICE
+        - 5000:5000 # WEB-UI
     environment:
-     - "WYZE_EMAIL=${WYZE_USER}" 
-     - "WYZE_PASSWORD=${WYZE_PASSWORD}"
-     - RTSP_READTIMEOUT=15
-
+      # [OPTIONAL] (Can be set in the WebUI):
+      - WYZE_EMAIL=${WYZE_USER}
+      - WYZE_PASSWORD=${WYZE_PASSWORD}
+      # [OPTIONAL] IP Address of the host to enable WebRTC e.g.,:
+      - WB_IP=10.0.1.2
+      # [OPTIONAL] Wyze API credentials:
+      - API_ID=${WYZE_API_ID}
+      - API_KEY=${WYZE_API_KEY}
+  
+  # vscode:
+  #   container_name: vscode
+  #   image: linuxserver/code-server:latest
+  #   restart: unless-stopped
+  #   volumes:
+  #     - homeassistant_data:/config/workspace
+  #     - vscode_config:/config
+  #     - /etc/letsencrypt:/config/letsencrypt/:ro
+  #   ports:
+  #     - 8443:8443
+  #   environment:
+  #     - "PASSWORD=${VSCODE_PASSWORD}"
+  #     - "SUDO_PASSWORD=${VSCODE_SUDOPASSWORD}"
+  #     #- PUID=1011
+  #     - PGID=1001
+  #     - DEFAULT_WORKSPACE=/config/workspace
+  #     - CERT=/config/letsencrypt/live/thomashillyer.com/fullchain.pem
+  #     - CERT_KEY=/config/letsencrypt/live/thomashillyer.com/privkey.pem
+  #     - BIND_ADDR=https://storage.thomashillyer.com:8443
+  #   privileged: true
+  #   network_mode: host
+  
 # Here we define what networks are available to use by the services above
 # Make sure to set the config of both macvlan and vlan_bridge as described in the guide.
 networks:
