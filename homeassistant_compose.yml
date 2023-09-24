@@ -118,7 +118,17 @@ services:
         # Uncomment next line to run avahi-daemon inside the container
         # Don't use if dbus and avahi run on the host and are bind-mounted
         # (see below under "volumes")
-        # - SCRYPTED_DOCKER_AVAHI=true
+        # - SCRYPTED_DOCKER_AVAHI=true\
+        
+        #   Scrypted insecure http service port: 11080
+        # Ports can be changed with environment variables.
+        # https: $SCRYPTED_SECURE_PORT
+        # http : $SCRYPTED_INSECURE_PORT
+        # Certificate can be modified via tls.createSecureContext options in
+        # JSON file located at SCRYPTED_HTTPS_OPTIONS_FILE environment variable:
+        # export SCRYPTED_HTTPS_OPTIONS_FILE=/path/to/options.json
+        # https://nodejs.org/api/tls.html#tlscreatesecurecontextoptions
+        - SCRYPTED_HTTPS_OPTIONS_FILE = /server/config/options.json
     # runtime: nvidia
 
     volumes:
@@ -143,7 +153,9 @@ services:
         # - /var/run/avahi-daemon/socket:/var/run/avahi-daemon/socket
 
         # Default volume for the Scrypted database. Typically should not be changed.
-        - ~/.scrypted/volume:/server/volume
+        - scrypted_volume:/server/volume
+        - scrypted_config:/server/config
+        - /etc/letsencrypt:/server/config/letsencrypt/:ro
     devices: [
         # uncomment the common systems devices to pass
         # them through to docker.
@@ -273,6 +285,10 @@ volumes:
     name: duplicati_data
   duplicati_backups:
     name: duplicati_backups
+  scrypted_volume:
+    name: scrypted_volume
+  scrypted_config:
+    name: scrypted_config
   # vscode_config:
   #   external: true
   #   name: vscode_config
