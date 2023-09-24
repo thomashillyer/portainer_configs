@@ -46,9 +46,10 @@ services:
     ports:
       - "8200:8200/tcp"
     volumes:
-      - /opt/duplicati/data:/data
-      - /mnt/backup/duplicati:/backups
-      - /opt:/source
+      - duplicati_data:/data
+      - duplicati_backups:/backups
+      - homeassistant_data:/source/homeassistant
+      - nodered_data:/source/nodered
       - /etc/localtime:/etc/localtime:ro
     group_add:
       - "1001"
@@ -253,6 +254,10 @@ volumes:
     name: mosquitto_log
   nodered_data:
     name: nodered_data
+  duplicati_data:
+    name: duplicati_data
+  duplicati_backups:
+    name: duplicati_backups
   # vscode_config:
   #   external: true
   #   name: vscode_config
