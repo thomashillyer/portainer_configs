@@ -98,7 +98,7 @@ services:
         ipv4_address: 10.0.10.12
         
   scrypted:
-    # environment:
+    environment:
         # Scrypted NVR Storage (Part 2 of 3)
 
         # Uncomment the next line to configure the NVR plugin to store recordings
@@ -128,7 +128,7 @@ services:
         # JSON file located at SCRYPTED_HTTPS_OPTIONS_FILE environment variable:
         # export SCRYPTED_HTTPS_OPTIONS_FILE=/path/to/options.json
         # https://nodejs.org/api/tls.html#tlscreatesecurecontextoptions
-        - SCRYPTED_HTTPS_OPTIONS_FILE = /server/config/options.json
+      - SCRYPTED_HTTPS_OPTIONS_FILE = /server/config/options.json
     # runtime: nvidia
 
     volumes:
