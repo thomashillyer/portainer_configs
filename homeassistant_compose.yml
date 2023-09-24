@@ -178,7 +178,7 @@ services:
 
     container_name: scrypted
     restart: unless-stopped
-    network_mode: host
+    # network_mode: host
     image: koush/scrypted
 
     # logging is noisy and will unnecessarily wear on flash storage.
