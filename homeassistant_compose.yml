@@ -198,19 +198,19 @@ services:
             max-size: "10m"
             max-file: "10"
 
-#  wyze-bridge:
-#    container_name: wyze-bridge
-#    restart: unless-stopped
-#    image: mrlt8/wyze-bridge:latest
-#    ports:
-#      - 1935:1935 # RTMP
-#      - 8554:8554 # RTSP
-#      - 8888:8888 # HLS
-#      - 5000:5000 # WEB-UI
-#    environment:
-#      - "WYZE_EMAIL=${WYZE_USER}" 
-#      - "WYZE_PASSWORD=${WYZE_PASSWORD}"
-#      - RTSP_READTIMEOUT=15
+  wyze-bridge:
+    container_name: wyze-bridge
+    restart: unless-stopped
+    image: mrlt8/wyze-bridge:latest
+    ports:
+     - 1935:1935 # RTMP
+     - 8554:8554 # RTSP
+     - 8888:8888 # HLS
+     - 5000:5000 # WEB-UI
+    environment:
+     - "WYZE_EMAIL=${WYZE_USER}" 
+     - "WYZE_PASSWORD=${WYZE_PASSWORD}"
+     - RTSP_READTIMEOUT=15
 
 # Here we define what networks are available to use by the services above
 # Make sure to set the config of both macvlan and vlan_bridge as described in the guide.
