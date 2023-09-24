@@ -193,10 +193,17 @@ services:
       - WYZE_EMAIL=${WYZE_USER}
       - WYZE_PASSWORD=${WYZE_PASSWORD}
       # [OPTIONAL] IP Address of the host to enable WebRTC e.g.,:
-      - WB_IP=10.0.1.2
+      - WB_IP=10.0.1.15
       # [OPTIONAL] Wyze API credentials:
       - API_ID=${WYZE_API_ID}
       - API_KEY=${WYZE_API_KEY}
+    group_add:
+      - "1001"
+    networks:
+      macvlan:
+        ipv4_address: 10.0.1.15 # this IP will show as a device on your router
+      vlan_bridge:
+        ipv4_address: 10.0.10.15 # same as macvlan (.15) and use "vlan bridge subnet" (10)
   
   # vscode:
   #   container_name: vscode
