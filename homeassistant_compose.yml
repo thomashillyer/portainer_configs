@@ -38,6 +38,25 @@ services:
         ipv4_address: 10.0.1.7 # this IP will show as a device on your router
       vlan_bridge:
         ipv4_address: 10.0.10.7 # same as macvlan (.7) and use "vlan bridge subnet" (10)
+        
+  duplicati:
+    container_name: duplicati
+    image: duplicati/duplicati
+    restart: unless-stopped
+    ports:
+      - "8200:8200/tcp"
+    volumes:
+      - /opt/duplicati/data:/data
+      - /mnt/backup/duplicati:/backups
+      - /opt:/source
+      - /etc/localtime:/etc/localtime:ro
+    group_add:
+      - "1001"
+    networks:
+      macvlan:
+        ipv4_address: 10.0.1.13 # this IP will show as a device on your router
+      vlan_bridge:
+        ipv4_address: 10.0.10.13 # same as macvlan (.13) and use "vlan bridge subnet" (10)
   
   # vscode:
   #   container_name: vscode
