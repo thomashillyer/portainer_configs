@@ -98,7 +98,7 @@ services:
         ipv4_address: 10.0.10.12
         
   scrypted:
-    environment:
+    # environment:
         # Scrypted NVR Storage (Part 2 of 3)
 
         # Uncomment the next line to configure the NVR plugin to store recordings
