@@ -128,7 +128,7 @@ services:
         # JSON file located at SCRYPTED_HTTPS_OPTIONS_FILE environment variable:
         # export SCRYPTED_HTTPS_OPTIONS_FILE=/path/to/options.json
         # https://nodejs.org/api/tls.html#tlscreatesecurecontextoptions
-      - SCRYPTED_HTTPS_OPTIONS_FILE=/server/config/scrypted_options.json
+      # - SCRYPTED_HTTPS_OPTIONS_FILE=/server/config/scrypted_options.json
     # runtime: nvidia
 
     volumes:
@@ -155,7 +155,7 @@ services:
         # Default volume for the Scrypted database. Typically should not be changed.
         - scrypted_volume:/server/volume
         - scrypted_config:/server/config
-        - /etc/letsencrypt:/server/config/letsencrypt/:ro
+        # - /etc/letsencrypt:/server/config/letsencrypt/:ro
     devices: [
         # uncomment the common systems devices to pass
         # them through to docker.
