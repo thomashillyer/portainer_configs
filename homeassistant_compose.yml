@@ -44,7 +44,7 @@ services:
     image: duplicati/duplicati
     restart: unless-stopped
     ports:
-      - "8200:8200/tcp"
+      - "8282:8200/tcp"
     volumes:
       - duplicati_data:/data
       - duplicati_backups:/backups
