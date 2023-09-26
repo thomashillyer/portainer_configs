@@ -154,7 +154,7 @@ services:
 
         # Default volume for the Scrypted database. Typically should not be changed.
         - scrypted_volume:/server/volume
-        - scrypted_config:/server/config
+        # - scrypted_config:/server/config
         # - /etc/letsencrypt:/server/config/letsencrypt/:ro
     devices: [
         # uncomment the common systems devices to pass
