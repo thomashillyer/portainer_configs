@@ -93,9 +93,9 @@ services:
       - nodered_data:/data
     networks:
       macvlan:
-        ipv4_address: 10.0.1.12
+        ipv4_address: 10.0.1.8
       vlan_bridge:
-        ipv4_address: 10.0.10.12
+        ipv4_address: 10.0.10.8
         
   scrypted:
     # environment:
@@ -192,9 +192,9 @@ services:
       - "1001"
     networks:
       macvlan:
-        ipv4_address: 10.0.1.17 # this IP will show as a device on your router
+        ipv4_address: 10.0.1.9 # this IP will show as a device on your router
       vlan_bridge:
-        ipv4_address: 10.0.10.17 # same as macvlan (.17) and use "vlan bridge subnet" (10)
+        ipv4_address: 10.0.10.9 # same as macvlan (.7) and use "vlan bridge subnet" (10)
 
   wyze-bridge:
     container_name: wyze-bridge
@@ -218,33 +218,30 @@ services:
       - API_KEY=${WYZE_API_KEY}
     group_add:
       - "1001"
+    hostname: wyze-bridge
     networks:
       macvlan:
         ipv4_address: 10.0.1.15 # this IP will show as a device on your router
       vlan_bridge:
         ipv4_address: 10.0.10.15 # same as macvlan (.15) and use "vlan bridge subnet" (10)
-  
-  # vscode:
-  #   container_name: vscode
-  #   image: linuxserver/code-server:latest
-  #   restart: unless-stopped
-  #   volumes:
-  #     - homeassistant_data:/config/workspace
-  #     - vscode_config:/config
-  #     - /etc/letsencrypt:/config/letsencrypt/:ro
-  #   ports:
-  #     - 8443:8443
-  #   environment:
-  #     - "PASSWORD=${VSCODE_PASSWORD}"
-  #     - "SUDO_PASSWORD=${VSCODE_SUDOPASSWORD}"
-  #     #- PUID=1011
-  #     - PGID=1001
-  #     - DEFAULT_WORKSPACE=/config/workspace
-  #     - CERT=/config/letsencrypt/live/thomashillyer.com/fullchain.pem
-  #     - CERT_KEY=/config/letsencrypt/live/thomashillyer.com/privkey.pem
-  #     - BIND_ADDR=https://storage.thomashillyer.com:8443
-  #   privileged: true
-  #   network_mode: host
+        
+  configurator:
+    container_name: configurator
+    image: causticlab/hass-configurator-docker
+    restart: unless-stopped
+    ports:
+      - "3218:3218/tcp"
+    volumes:
+      - configurator_data:/config
+      - homeassistant_data:/hass-config
+    depends_on:
+      - homeassistant
+    hostname: configurator
+    networks:
+      macvlan:
+        ipv4_address: 10.0.1.11 # this IP will show as a device on your router
+      vlan_bridge:
+        ipv4_address: 10.0.10.11 # same as macvlan (.11) and use "vlan bridge subnet" (10)
   
 # Here we define what networks are available to use by the services above
 # Make sure to set the config of both macvlan and vlan_bridge as described in the guide.
@@ -296,6 +293,8 @@ volumes:
     name: scrypted_volume
   scrypted_config:
     name: scrypted_config
+  configurator_date:
+    name: configurator_data
   # vscode_config:
   #   external: true
   #   name: vscode_config
