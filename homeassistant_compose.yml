@@ -50,6 +50,7 @@ services:
       - duplicati_backups:/backups
       - homeassistant_data:/source/homeassistant
       - nodered_data:/source/nodered
+      - /var/lib/docker/volumes:/source/all_volumes
       - /etc/localtime:/etc/localtime:ro
     group_add:
       - "1001"
