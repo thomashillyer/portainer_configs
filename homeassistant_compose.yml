@@ -293,8 +293,5 @@ volumes:
     name: scrypted_volume
   scrypted_config:
     name: scrypted_config
-  configurator_date:
+  configurator_data:
     name: configurator_data
-  # vscode_config:
-  #   external: true
-  #   name: vscode_config
