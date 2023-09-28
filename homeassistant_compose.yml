@@ -230,7 +230,8 @@ services:
     image: causticlab/hass-configurator-docker
     restart: unless-stopped
     ports:
-      - "3218:3218/tcp"
+      - 3218:3218
+      # - "3218:3218/tcp"
     volumes:
       - configurator_data:/config
       - homeassistant_data:/hass-config
