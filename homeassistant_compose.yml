@@ -99,7 +99,7 @@ services:
         ipv4_address: 10.0.10.8
         
   scrypted:
-    # environment:
+    environment:
         # Scrypted NVR Storage (Part 2 of 3)
 
         # Uncomment the next line to configure the NVR plugin to store recordings
@@ -125,6 +125,7 @@ services:
         # Ports can be changed with environment variables.
         # https: $SCRYPTED_SECURE_PORT
         # http : $SCRYPTED_INSECURE_PORT
+        - SCRYPTED_INSECURE_PORT=11080
         # Certificate can be modified via tls.createSecureContext options in
         # JSON file located at SCRYPTED_HTTPS_OPTIONS_FILE environment variable:
         # export SCRYPTED_HTTPS_OPTIONS_FILE=/path/to/options.json
