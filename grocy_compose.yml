@@ -38,22 +38,22 @@ services:
       vlan_bridge:
         ipv4_address: 10.0.10.17 # same as macvlan (.3) and use "vlan bridge subnet" (10)
   
-  mongo:
-    image: mongo
-    container_name: mongodb
-    restart: unless-stopped
-    environment:
-      MONGO_INITDB_ROOT_USERNAME: root
-      MONGO_INITDB_ROOT_PASSWORD: root
-    volumes:
-      - mongo_db:/data/db
-    group_add:
-      - "1001"
-    networks:
-      macvlan:
-        ipv4_address: 10.0.1.18 # this IP will show as a device on your router
-      vlan_bridge:
-        ipv4_address: 10.0.10.18 # same as macvlan (.3) and use "vlan bridge subnet" (10)
+  # mongo:
+  #   image: mongo
+  #   container_name: mongodb
+  #   restart: unless-stopped
+  #   environment:
+  #     MONGO_INITDB_ROOT_USERNAME: root
+  #     MONGO_INITDB_ROOT_PASSWORD: root
+  #   volumes:
+  #     - mongo_db:/data/db
+  #   group_add:
+  #     - "1001"
+  #   networks:
+  #     macvlan:
+  #       ipv4_address: 10.0.1.18 # this IP will show as a device on your router
+  #     vlan_bridge:
+  #       ipv4_address: 10.0.10.18 # same as macvlan (.3) and use "vlan bridge subnet" (10)
 
   # recipebackend:
   #   image: ghcr.io/georgegebbett/recipe-buddy-backend:latest
@@ -70,8 +70,8 @@ services:
 volumes:
   grocy_config:
     name: grocy_config
-  mongo_db:
-    name: mongo_db
+  # mongo_db:
+  #   name: mongo_db
   barcodebuddy_config:
     name: barcodebuddy_config
 
