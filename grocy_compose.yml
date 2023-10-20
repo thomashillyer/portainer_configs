@@ -3,7 +3,7 @@ version: "3.4"
 services:
 
   grocy:
-    image: lscr.io/linuxserver/grocy:latest
+    image: linuxserver/grocy:latest
     container_name: grocy
     environment:
       - PUID=1000
