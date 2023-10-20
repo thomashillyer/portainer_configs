@@ -18,6 +18,10 @@ services:
     image: f0rc3/barcodebuddy
     restart: unless-stopped
     container_name: barcode_buddy
+    ports:
+      - 9980:80
+    volumes:
+      - barcodebuddy_config:/config
   
   mongo:
     image: mongo
@@ -29,20 +33,22 @@ services:
     volumes:
       - mongo_db:/data/db
 
-  recipebackend:
-    image: ghcr.io/georgegebbett/recipe-buddy-backend:latest
-    depends_on:
-      - "mongo"
+  # recipebackend:
+  #   image: ghcr.io/georgegebbett/recipe-buddy-backend:latest
+  #   depends_on:
+  #     - "mongo"
 
-  recipefrontend:
-    image: ghcr.io/georgegebbett/recipe-buddy-frontend:latest
-    ports:
-      - "4000:80"
-    depends_on:
-      - "recipebackend"
+  # recipefrontend:
+  #   image: ghcr.io/georgegebbett/recipe-buddy-frontend:latest
+  #   ports:
+  #     - "4000:80"
+  #   depends_on:
+  #     - "recipebackend"
 
 volumes:
   grocy_config:
     name: grocy_config
   mongo_db:
     name: mongo_db
+  barcodebuddy_config:
+    name: barcodebuddy_config
