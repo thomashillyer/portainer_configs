@@ -8,17 +8,21 @@ services:
     group_add:
       - "1001"
     environment:
-      - "USERNAME=${EUFY_USERNAME}"
-      - "PASSWORD=${EUFY_PASSWORD}"
-      - "COUNTRY=${EUFY_COUNTRY_CODE}"
-      - "TRUSTED_DEVICE_NAME=${EUFY_DEVICE_NAME}"
+      - USERNAME="${EUFY_USERNAME}"
+      - PASSWORD="${EUFY_PASSWORD}"
+      - COUNTRY="${EUFY_COUNTRY_CODE}"
+      - TRUSTED_DEVICE_NAME="${EUFY_DEVICE_NAME}"
+      - PORT=3000
     ports:
       - 3000:3000
-    networks:
-      docker_macvlan:
-          ipv4_address: 192.168.1.10 # this IP will show as a device on your router
-      docker_vlan_bridge:
-          ipv4_address: 192.168.10.10 # same as macvlan (.10) and use "vlan bridge subnet" (10)
+    volumes:
+      - eufy_security_ws_data:/data
+    network_mode: "host"
+    # networks:
+    #   docker_macvlan:
+    #       ipv4_address: 10.0.1.18 # this IP will show as a device on your router
+    #   docker_vlan_bridge:
+    #       ipv4_address: 10.0.10.18 # same as macvlan (.18) and use "vlan bridge subnet" (10)
 
   rtsp:
     container_name: rtsp-simple-server
@@ -28,16 +32,20 @@ services:
     group_add:
       - "1001"
     environment:
-      - "RTSP_PROTOCOLS=tcp"
+      - RTSP_PROTOCOLS=tcp
     ports:
       - 8554:8554
       - 1935:1935
-    networks:
-      - docker_macvlan
-      - docker_vlan_bridge
+    network_mode: "host"
+    # networks:
+    #   - docker_macvlan
+    #   - docker_vlan_bridge
 
 networks:
   docker_macvlan:
     external: true
   docker_vlan_bridge:
     external: true
+volumes:
+  eufy_security_ws_data:
+    name: eufy_security_ws_data
