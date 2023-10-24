@@ -8,9 +8,9 @@ services:
     group_add:
       - "1001"
     environment:
-      - USERNAME="${EUFY_USERNAME}"
-      - PASSWORD="${EUFY_PASSWORD}"
-      - COUNTRY="${EUFY_COUNTRY_CODE}"
+      - "USERNAME=${EUFY_USERNAME}"
+      - "PASSWORD=${EUFY_PASSWORD}"
+      - "COUNTRY=${EUFY_COUNTRY_CODE}"
       - PORT=3000
     ports:
       - 3000:3000
