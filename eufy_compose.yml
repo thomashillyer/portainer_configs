@@ -13,11 +13,11 @@ services:
       - "COUNTRY=${EUFY_COUNTRY_CODE}"
       - PORT=3000
       - "STATION_IP_ADDRESSES=${EUFY_STATION_IPS}"
-    # ports:
-    #   - 3000:3000
     volumes:
       - eufy_security_ws_data:/data
-    network_mode: "host"
+    # ports:
+    #   - 3000:3000
+    # network_mode: "host"
     networks:
       docker_macvlan:
           ipv4_address: 10.0.1.18 # this IP will show as a device on your router
