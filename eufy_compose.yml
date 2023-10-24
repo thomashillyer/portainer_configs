@@ -2,7 +2,7 @@ version: "3"
 services:
   eufy-security-ws:
     container_name: eufy-security-ws
-    image: bropat/eufy-security-ws:1.3.0
+    image: bropat/eufy-security-ws:latest
     restart: unless-stopped
     privileged: true
     group_add:
@@ -12,16 +12,17 @@ services:
       - "PASSWORD=${EUFY_PASSWORD}"
       - "COUNTRY=${EUFY_COUNTRY_CODE}"
       - PORT=3000
-    ports:
-      - 3000:3000
+      - "STATION_IP_ADDRESSES=${EUFY_STATION_IPS}"
+    # ports:
+    #   - 3000:3000
     volumes:
       - eufy_security_ws_data:/data
     network_mode: "host"
-    # networks:
-    #   docker_macvlan:
-    #       ipv4_address: 10.0.1.18 # this IP will show as a device on your router
-    #   docker_vlan_bridge:
-    #       ipv4_address: 10.0.10.18 # same as macvlan (.18) and use "vlan bridge subnet" (10)
+    networks:
+      docker_macvlan:
+          ipv4_address: 10.0.1.18 # this IP will show as a device on your router
+      docker_vlan_bridge:
+          ipv4_address: 10.0.10.18 # same as macvlan (.18) and use "vlan bridge subnet" (10)
 
   rtsp:
     container_name: rtsp-simple-server
@@ -32,13 +33,15 @@ services:
       - "1001"
     environment:
       - RTSP_PROTOCOLS=tcp
-    ports:
-      - 8554:8554
-      - 1935:1935
-    network_mode: "host"
-    # networks:
-    #   - docker_macvlan
-    #   - docker_vlan_bridge
+    # ports:
+    #   - 8554:8554
+    #   - 1935:1935
+    # network_mode: "host"
+    networks:
+      docker_macvlan:
+          ipv4_address: 10.0.1.19
+      docker_vlan_bridge:
+          ipv4_address: 10.0.10.19
 
 networks:
   docker_macvlan:
