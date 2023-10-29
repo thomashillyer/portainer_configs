@@ -38,6 +38,19 @@ services:
         ipv4_address: 10.0.1.5 # this IP will show as a device on your router
       vlan_bridge:
         ipv4_address: 10.0.10.5 # same as macvlan (192) and use "vlan bridge subnet" (10)
+        
+tunnel:
+    container_name: cloudflared-tunnel
+    image: cloudflare/cloudflared
+    restart: unless-stopped
+    command: tunnel run
+    env_file:
+      - cloudflared.env
+    networks:
+      macvlan:
+        ipv4_address: 10.0.1.3 # this IP will show as a device on your router
+      vlan_bridge:
+        ipv4_address: 10.0.10.3 # same as macvlan (3) and use "vlan bridge subnet" (10)
 
 volumes:
   portainer_data:
