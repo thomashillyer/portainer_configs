@@ -243,7 +243,7 @@ services:
       - PROXY_DOMAIN=${CODE_DOMAIN} #optional
       - DEFAULT_WORKSPACE=/config/workspace #optional
     volumes:
-      - code_server_config:/config
+      - homeassistant_data:/config
     ports:
       - 8443:8443
     restart: unless-stopped
@@ -322,7 +322,5 @@ volumes:
     name: scrypted_volume
   scrypted_config:
     name: scrypted_config
-  code_server_config:
-    name: code_server_config
   # configurator_data:
     # name: configurator_data
