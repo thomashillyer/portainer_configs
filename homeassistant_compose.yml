@@ -227,24 +227,50 @@ services:
       vlan_bridge:
         ipv4_address: 10.0.10.15 # same as macvlan (.15) and use "vlan bridge subnet" (10)
         
-  configurator:
-    container_name: configurator
-    image: causticlab/hass-configurator-docker
-    restart: unless-stopped
-    ports:
-      - 3218:3218
-      # - "3218:3218/tcp"
+  code-server:
+    image: lscr.io/linuxserver/code-server:latest
+    container_name: code-server
+    group_add:
+      - "1001"
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=${TZ}
+      - PASSWORD=${CODE_PASSWORD} #optional
+      # - HASHED_PASSWORD= #optional
+      - SUDO_PASSWORD=${CODE_SUDO_PASSWORD} #optional
+      #- SUDO_PASSWORD_HASH= #optional
+      - PROXY_DOMAIN=${CODE_DOMAIN} #optional
+      - DEFAULT_WORKSPACE=/config/workspace #optional
     volumes:
-      - configurator_data:/config
-      - homeassistant_data:/hass-config
-    depends_on:
-      - homeassistant
-    hostname: configurator
+      - code_server_config:/config
+    ports:
+      - 8443:8443
+    restart: unless-stopped
     networks:
       macvlan:
         ipv4_address: 10.0.1.11 # this IP will show as a device on your router
       vlan_bridge:
         ipv4_address: 10.0.10.11 # same as macvlan (.11) and use "vlan bridge subnet" (10)
+    
+  # configurator:
+  #   container_name: configurator
+  #   image: causticlab/hass-configurator-docker
+  #   restart: unless-stopped
+  #   ports:
+  #     - 3218:3218
+  #     # - "3218:3218/tcp"
+  #   volumes:
+  #     - configurator_data:/config
+  #     - homeassistant_data:/hass-config
+  #   depends_on:
+  #     - homeassistant
+  #   hostname: configurator
+  #   networks:
+  #     macvlan:
+  #       ipv4_address: 10.0.1.11 # this IP will show as a device on your router
+  #     vlan_bridge:
+  #       ipv4_address: 10.0.10.11 # same as macvlan (.11) and use "vlan bridge subnet" (10)
   
 # Here we define what networks are available to use by the services above
 # Make sure to set the config of both macvlan and vlan_bridge as described in the guide.
@@ -296,5 +322,7 @@ volumes:
     name: scrypted_volume
   scrypted_config:
     name: scrypted_config
-  configurator_data:
-    name: configurator_data
+  code_server_config:
+    name: code_server_config
+  # configurator_data:
+    # name: configurator_data
