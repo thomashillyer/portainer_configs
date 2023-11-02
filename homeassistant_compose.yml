@@ -241,7 +241,7 @@ services:
       - SUDO_PASSWORD=${CODE_SUDO_PASSWORD} #optional
       #- SUDO_PASSWORD_HASH= #optional
       - PROXY_DOMAIN=${CODE_DOMAIN} #optional
-      - DEFAULT_WORKSPACE=/config/workspace #optional
+      - DEFAULT_WORKSPACE=/config #optional
     volumes:
       - homeassistant_data:/config
     ports:
