@@ -6,7 +6,7 @@ services:
     hostname: Plex
     environment:
       - PUID=1001
-      - PGID=100
+      - PGID=1001
       - VERSION=docker
       - PLEX_CLAIM=claim-NZbczaZ6F5WatMLiMUxP
     group_add:
@@ -28,7 +28,7 @@ services:
     hostname: radarr
     environment:
       - PUID=1001
-      - PGID=100
+      - PGID=1001
       - TZ=Canada/Pacific
     group_add:
       - "1001"
