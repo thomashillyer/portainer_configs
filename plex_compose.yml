@@ -1,7 +1,7 @@
 version: "3"
 services:
   plex:
-    image: ghcr.io/linuxserver/plex:arm32v7-latest 
+    image:  linuxserver/plex:arm64v8-latest
     container_name: plex
     hostname: Plex
     environment:
