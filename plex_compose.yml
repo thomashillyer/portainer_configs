@@ -27,8 +27,8 @@ services:
     container_name: radarr
     hostname: radarr
     environment:
-      - PUID=1000
-      - PGID=1000
+      - PUID=1001
+      - PGID=100
       - TZ=Canada/Pacific
     group_add:
       - "1001"
