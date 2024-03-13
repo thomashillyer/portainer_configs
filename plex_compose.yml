@@ -5,8 +5,8 @@ services:
     container_name: plex
     hostname: Plex
     environment:
-      - PUID=1000
-      - PGID=1000
+      - PUID=1001
+      - PGID=100
       - VERSION=docker
       - PLEX_CLAIM=claim-NZbczaZ6F5WatMLiMUxP
     group_add:
