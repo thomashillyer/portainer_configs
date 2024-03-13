@@ -63,6 +63,29 @@ services:
           ipv4_address: 10.0.1.14
       docker_vlan_bridge:
           ipv4_address: 10.0.10.14
+          
+  qbittorrent:
+    image: lscr.io/linuxserver/qbittorrent:arm64v8-latest
+    container_name: qbittorrent
+    environment:
+      - PUID=1001
+      - PGID=1001
+      - TZ=Canada/Pacific
+      - WEBUI_PORT=8989
+      - TORRENTING_PORT=6881
+    volumes:
+      - qbit_config:/config
+      - /media/downloads:/downloads
+    ports:
+      - 8989:8989
+      - 6881:6881
+      - 6881:6881/udp
+    restart: unless-stopped
+    networks:
+      docker_macvlan:
+          ipv4_address: 10.0.1.21
+      docker_vlan_bridge:
+          ipv4_address: 10.0.10.21
 
 volumes:
   plex_config:
@@ -71,6 +94,8 @@ volumes:
     name: radarr_config
   jackett_config:
     name: jackett_config
+  qbit_config:
+    name: qbit_config
 
 networks:
   docker_macvlan:
