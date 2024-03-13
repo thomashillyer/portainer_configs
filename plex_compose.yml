@@ -5,8 +5,8 @@ services:
     container_name: plex
     hostname: Plex
     environment:
-      - PUID=1001
-      - PGID=100
+      - PUID=1000
+      - PGID=1000
       - VERSION=docker
       - PLEX_CLAIM=claim-NZbczaZ6F5WatMLiMUxP
     group_add:
@@ -22,9 +22,32 @@ services:
       docker_vlan_bridge:
           ipv4_address: 10.0.10.10
 
+  radarr:
+    image: lscr.io/linuxserver/radarr:arm64v8-latest
+    container_name: radarr
+    hostname: radarr
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Canada/Pacific
+    group_add:
+      - "1001"
+    volumes:
+      - radarr_config:/config
+      - /media/movies:/data/movies
+      - /media/downloads:/data/downloads
+    restart: unless-stopped
+    networks:
+      docker_macvlan:
+          ipv4_address: 10.0.1.11
+      docker_vlan_bridge:
+          ipv4_address: 10.0.10.11
+
 volumes:
   plex_config:
     name: plex_config
+  radarr_config:
+    name: radarr_config
 
 networks:
   docker_macvlan:
