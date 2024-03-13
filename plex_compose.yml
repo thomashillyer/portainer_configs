@@ -1,0 +1,33 @@
+version: "3"
+services:
+  plex:
+    image: ghcr.io/linuxserver/plex:arm32v7-latest 
+    container_name: plex
+    hostname: Plex
+    environment:
+      - PUID=1001
+      - PGID=100
+      - VERSION=docker
+      - PLEX_CLAIM=claim-NZbczaZ6F5WatMLiMUxP
+    group_add:
+      - "1001"
+    volumes:
+      - plex_config:/config
+      - /media/tv:/tv
+      - /media/movies:/movies
+    restart: unless-stopped
+    networks:
+      docker_macvlan:
+          ipv4_address: 10.0.1.10
+      docker_vlan_bridge:
+          ipv4_address: 10.0.10.10
+
+volumes:
+  plex_config:
+    name: plex_config
+
+networks:
+  docker_macvlan:
+    external: true
+  docker_vlan_bridge:
+    external: true
