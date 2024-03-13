@@ -35,6 +35,7 @@ services:
     volumes:
       - radarr_config:/config
       - /media/movies:/data/movies
+      - /media/tv:/data/tv
       - /media/downloads:/data/downloads
     restart: unless-stopped
     networks:
@@ -43,11 +44,33 @@ services:
       docker_vlan_bridge:
           ipv4_address: 10.0.10.12
 
+  jackett:
+    image: lscr.io/linuxserver/jackett:arm64v8-latest
+    container_name: jackett
+    hostname: jackett
+    environment:
+      - PUID=1001
+      - PGID=1001
+      - TZ=Canada/Pacific
+      - AUTO_UPDATE=true #optional
+      - RUN_OPTS= #optional
+    volumes:
+      - jackett_config:/config
+      - /media/downloads/torrents:/data/downloads/torrents
+    restart: unless-stopped
+    networks:
+      docker_macvlan:
+          ipv4_address: 10.0.1.13
+      docker_vlan_bridge:
+          ipv4_address: 10.0.10.13
+
 volumes:
   plex_config:
     name: plex_config
   radarr_config:
     name: radarr_config
+  jackett_config:
+    name: jackett_config
 
 networks:
   docker_macvlan:
