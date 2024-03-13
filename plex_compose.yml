@@ -54,6 +54,8 @@ services:
       - TZ=Canada/Pacific
       - AUTO_UPDATE=true #optional
       - RUN_OPTS= #optional
+    group_add:
+      - "1001"
     volumes:
       - jackett_config:/config
       - /media/downloads/torrents:/data/downloads/torrents
@@ -73,6 +75,8 @@ services:
       - TZ=Canada/Pacific
       - WEBUI_PORT=8989
       - TORRENTING_PORT=6881
+    group_add:
+      - "1001"
     volumes:
       - qbit_config:/config
       - /media/downloads/torrents:/data/downloads/torrents
