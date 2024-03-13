@@ -60,9 +60,9 @@ services:
     restart: unless-stopped
     networks:
       docker_macvlan:
-          ipv4_address: 10.0.1.13
+          ipv4_address: 10.0.1.14
       docker_vlan_bridge:
-          ipv4_address: 10.0.10.13
+          ipv4_address: 10.0.10.14
 
 volumes:
   plex_config:
