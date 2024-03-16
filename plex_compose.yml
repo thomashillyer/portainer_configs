@@ -44,6 +44,30 @@ services:
       docker_vlan_bridge:
           ipv4_address: 10.0.10.12
 
+  sonarr:
+    image: lscr.io/linuxserver/sonarr:arm64v8-latest
+    container_name: sonarr
+    hostname: Sonarr
+    environment:
+      - PUID=1001
+      - PGID=1001
+      - TZ=Canada/Pacific
+    group_add:
+      - "1001"
+    volumes:
+      - sonarr_config:/config
+      - /media/movies:/data/movies
+      - /media/tv:/data/tv
+      - /media/downloads:/data/downloads
+    ports:
+      - 8989:8989
+    restart: unless-stopped
+    networks:
+      docker_macvlan:
+          ipv4_address: 10.0.1.22
+      docker_vlan_bridge:
+          ipv4_address: 10.0.10.22
+
   jackett:
     image: lscr.io/linuxserver/jackett:arm64v8-latest
     container_name: jackett
@@ -96,6 +120,8 @@ volumes:
     name: plex_config
   radarr_config:
     name: radarr_config
+  sonarr_config:
+    name: sonarr_config
   jackett_config:
     name: jackett_config
   qbit_config:
