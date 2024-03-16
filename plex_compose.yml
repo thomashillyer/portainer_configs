@@ -13,8 +13,7 @@ services:
       - "1001"
     volumes:
       - plex_config:/config
-      - /media/tv:/tv
-      - /media/movies:/movies
+      - /media:/data
     restart: unless-stopped
     networks:
       docker_macvlan:
@@ -34,9 +33,7 @@ services:
       - "1001"
     volumes:
       - radarr_config:/config
-      - /media/movies:/data/movies
-      - /media/tv:/data/tv
-      - /media/downloads:/data/downloads
+      - /media:/data
     restart: unless-stopped
     networks:
       docker_macvlan:
@@ -56,9 +53,7 @@ services:
       - "1001"
     volumes:
       - sonarr_config:/config
-      - /media/movies:/data/movies
-      - /media/tv:/data/tv
-      - /media/downloads:/data/downloads
+      - /media:/data
     ports:
       - 8989:8989
     restart: unless-stopped
