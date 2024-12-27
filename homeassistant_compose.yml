@@ -47,7 +47,7 @@ services:
       - "8282:8200/tcp"
     volumes:
       - duplicati_data:/data
-      - duplicati_date:/config
+      - duplicati_data:/config
       - duplicati_backups:/backups
       - homeassistant_data:/source/homeassistant
       - nodered_data:/source/nodered
