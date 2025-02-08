@@ -22,7 +22,7 @@ networks:
     driver: macvlan
     enable_ipv6: false
     driver_opts:
-      parent: eth0
+      parent: eth0.10
     ipam:
       config:
         - subnet: 10.0.1.0/24 # Set to same subnet as your router and other devices
