@@ -1,0 +1,40 @@
+version: "3"
+services:
+  tunnel:
+    container_name: cloudflared-tunnel
+    image: cloudflare/cloudflared
+    restart: unless-stopped
+    command: tunnel run
+    env_file:
+      - cloudflared.env
+    networks:
+      macvlan:
+        ipv4_address: 10.0.1.20 # this IP will show as a device on your router
+      vlan_bridge:
+        ipv4_address: 10.0.10.20 # same as macvlan (3) and use "vlan bridge subnet" (10)
+
+
+# Here we define what networks are available to use by the services above
+# Make sure to set the config of both macvlan and vlan_bridge as described in the guide.
+networks:
+  macvlan:
+    name: docker_macvlan
+    driver: macvlan
+    enable_ipv6: false
+    driver_opts:
+      parent: eth0
+    ipam:
+      config:
+        - subnet: 10.0.1.0/24 # Set to same subnet as your router and other devices
+          ip_range: 10.0.1.10/27 # Available range from 192-224
+          gateway: 10.0.1.1 # This is your router IP
+
+  vlan_bridge:
+    name: docker_vlan_bridge
+    driver: bridge
+    enable_ipv6: false
+    ipam:
+      config:
+        - subnet: 10.0.10.0/24 # subnet for all containers
+          ip_range: 10.0.10.10/27 # for easier use, set to same range as under macvlan (192 to 224 here)
+          gateway: 10.0.10.1 # for easier use, set to same last number as your router (1)
