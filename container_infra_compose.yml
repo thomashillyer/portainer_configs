@@ -5,8 +5,8 @@ services:
     image: cloudflare/cloudflared
     restart: unless-stopped
     command: tunnel run
-    env_file:
-      - cloudflared.env
+    #env_file:
+    #  - cloudflared.env
     networks:
       macvlan:
         ipv4_address: 10.0.1.20 # this IP will show as a device on your router
@@ -26,7 +26,7 @@ networks:
     ipam:
       config:
         - subnet: 10.0.1.0/24 # Set to same subnet as your router and other devices
-          ip_range: 10.0.1.10/27 # Available range from 192-224
+          ip_range: 10.0.1.0/27 # Available range from 192-224
           gateway: 10.0.1.1 # This is your router IP
 
   vlan_bridge:
@@ -36,5 +36,5 @@ networks:
     ipam:
       config:
         - subnet: 10.0.10.0/24 # subnet for all containers
-          ip_range: 10.0.10.10/27 # for easier use, set to same range as under macvlan (192 to 224 here)
+          ip_range: 10.0.10.0/27 # for easier use, set to same range as under macvlan (192 to 224 here)
           gateway: 10.0.10.1 # for easier use, set to same last number as your router (1)
