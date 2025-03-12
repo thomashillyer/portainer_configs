@@ -106,7 +106,7 @@ services:
       - qbit_config:/config
       - /media/downloads/torrents:/data/downloads/torrents
     ports:
-      - 8990:8989
+      - 8990:8990
       - 6881:6881
       - 6881:6881/udp
     restart: unless-stopped
