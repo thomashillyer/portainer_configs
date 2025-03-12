@@ -1,0 +1,129 @@
+version: "3"
+services:
+  plex:
+    image:  linuxserver/plex:amd64-latest
+    container_name: plex
+    hostname: Plex
+    environment:
+      - PUID=1001
+      - PGID=1001
+      - VERSION=docker
+      - PLEX_CLAIM=claim-NZbczaZ6F5WatMLiMUxP
+    group_add:
+      - "1001"
+    volumes:
+      - plex_config:/config
+      - /media:/data
+    restart: unless-stopped
+    networks:
+      docker_macvlan:
+          ipv4_address: 10.0.1.10
+      docker_vlan_bridge:
+          ipv4_address: 10.0.10.10
+
+  radarr:
+    image: lscr.io/linuxserver/radarr:amd64-latest
+    container_name: radarr
+    hostname: radarr
+    environment:
+      - PUID=1001
+      - PGID=1001
+      - TZ=Canada/Pacific
+    group_add:
+      - "1001"
+    volumes:
+      - radarr_config:/config
+      - /media:/data
+    restart: unless-stopped
+    networks:
+      docker_macvlan:
+          ipv4_address: 10.0.1.12
+      docker_vlan_bridge:
+          ipv4_address: 10.0.10.12
+
+  sonarr:
+    image: lscr.io/linuxserver/sonarr:amd64-latest
+    container_name: sonarr
+    hostname: Sonarr
+    environment:
+      - PUID=1001
+      - PGID=1001
+      - TZ=Canada/Pacific
+    group_add:
+      - "1001"
+    volumes:
+      - sonarr_config:/config
+      - /media:/data
+    ports:
+      - 8989:8989
+    restart: unless-stopped
+    networks:
+      docker_macvlan:
+          ipv4_address: 10.0.1.22
+      docker_vlan_bridge:
+          ipv4_address: 10.0.10.22
+
+  jackett:
+    image: lscr.io/linuxserver/jackett:amd64-latest
+    container_name: jackett
+    hostname: jackett
+    environment:
+      - PUID=1001
+      - PGID=1001
+      - TZ=Canada/Pacific
+      - AUTO_UPDATE=true #optional
+      - RUN_OPTS= #optional
+    group_add:
+      - "1001"
+    volumes:
+      - jackett_config:/config
+      - /media/downloads/torrents:/data/downloads/torrents
+    restart: unless-stopped
+    networks:
+      docker_macvlan:
+          ipv4_address: 10.0.1.14
+      docker_vlan_bridge:
+          ipv4_address: 10.0.10.14
+          
+  qbittorrent:
+    image: lscr.io/linuxserver/qbittorrent:amd64-latest
+    container_name: qbittorrent
+    environment:
+      - PUID=1001
+      - PGID=1001
+      - TZ=Canada/Pacific
+      - WEBUI_PORT=8989
+      - TORRENTING_PORT=6881
+    group_add:
+      - "1001"
+    volumes:
+      - qbit_config:/config
+      - /media/downloads/torrents:/data/downloads/torrents
+    ports:
+      - 8989:8989
+      - 6881:6881
+      - 6881:6881/udp
+    restart: unless-stopped
+    networks:
+      docker_macvlan:
+          ipv4_address: 10.0.1.21
+      docker_vlan_bridge:
+          ipv4_address: 10.0.10.21
+
+volumes:
+  plex_config:
+    name: plex_config
+  radarr_config:
+    name: radarr_config
+  sonarr_config:
+    name: sonarr_config
+  jackett_config:
+    name: jackett_config
+  qbit_config:
+    name: qbit_config
+
+networks:
+  docker_macvlan:
+    external: true
+  docker_vlan_bridge:
+    external: true
