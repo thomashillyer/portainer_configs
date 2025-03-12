@@ -15,11 +15,11 @@ services:
       - plex_config:/config
       - /media:/data
     restart: unless-stopped
-    networks:
-      docker_macvlan:
-          ipv4_address: 10.0.1.10
-      docker_vlan_bridge:
-          ipv4_address: 10.0.10.10
+    # networks:
+    #   docker_macvlan:
+    #       ipv4_address: 10.0.1.10
+    #   docker_vlan_bridge:
+    #       ipv4_address: 10.0.10.10
 
   radarr:
     image: lscr.io/linuxserver/radarr:amd64-latest
@@ -35,11 +35,11 @@ services:
       - radarr_config:/config
       - /media:/data
     restart: unless-stopped
-    networks:
-      docker_macvlan:
-          ipv4_address: 10.0.1.12
-      docker_vlan_bridge:
-          ipv4_address: 10.0.10.12
+    # networks:
+    #   docker_macvlan:
+    #       ipv4_address: 10.0.1.12
+    #   docker_vlan_bridge:
+    #       ipv4_address: 10.0.10.12
 
   sonarr:
     image: lscr.io/linuxserver/sonarr:amd64-latest
@@ -57,11 +57,11 @@ services:
     ports:
       - 8989:8989
     restart: unless-stopped
-    networks:
-      docker_macvlan:
-          ipv4_address: 10.0.1.22
-      docker_vlan_bridge:
-          ipv4_address: 10.0.10.22
+    # networks:
+    #   docker_macvlan:
+    #       ipv4_address: 10.0.1.22
+    #   docker_vlan_bridge:
+    #       ipv4_address: 10.0.10.22
 
   jackett:
     image: lscr.io/linuxserver/jackett:amd64-latest
@@ -79,11 +79,11 @@ services:
       - jackett_config:/config
       - /media/downloads/torrents:/data/downloads/torrents
     restart: unless-stopped
-    networks:
-      docker_macvlan:
-          ipv4_address: 10.0.1.14
-      docker_vlan_bridge:
-          ipv4_address: 10.0.10.14
+    # networks:
+    #   docker_macvlan:
+    #       ipv4_address: 10.0.1.14
+    #   docker_vlan_bridge:
+    #       ipv4_address: 10.0.10.14
           
   qbittorrent:
     image: lscr.io/linuxserver/qbittorrent:amd64-latest
@@ -104,11 +104,11 @@ services:
       - 6881:6881
       - 6881:6881/udp
     restart: unless-stopped
-    networks:
-      docker_macvlan:
-          ipv4_address: 10.0.1.21
-      docker_vlan_bridge:
-          ipv4_address: 10.0.10.21
+    # networks:
+    #   docker_macvlan:
+    #       ipv4_address: 10.0.1.21
+    #   docker_vlan_bridge:
+    #       ipv4_address: 10.0.10.21
 
 volumes:
   plex_config:
@@ -129,25 +129,25 @@ volumes:
 #     external: true
 # Here we define what networks are available to use by the services above
 # Make sure to set the config of both macvlan and vlan_bridge as described in the guide.
-networks:
-  macvlan:
-    name: docker_macvlan
-    driver: macvlan
-    enable_ipv6: false
-    driver_opts:
-      parent: enp1s0f0
-    ipam:
-      config:
-        - subnet: 10.0.1.0/24 # Set to same subnet as your router and other devices
-          ip_range: 10.0.1.0/27 # Available range from 192-224
-          gateway: 10.0.1.1 # This is your router IP
+# networks:
+#   macvlan:
+#     name: docker_macvlan
+#     driver: macvlan
+#     enable_ipv6: false
+#     driver_opts:
+#       parent: enp1s0f0
+#     ipam:
+#       config:
+#         - subnet: 10.0.1.0/24 # Set to same subnet as your router and other devices
+#           ip_range: 10.0.1.0/27 # Available range from 192-224
+#           gateway: 10.0.1.1 # This is your router IP
 
-  vlan_bridge:
-    name: docker_vlan_bridge
-    driver: bridge
-    enable_ipv6: false
-    ipam:
-      config:
-        - subnet: 10.0.10.0/24 # subnet for all containers
-          ip_range: 10.0.10.0/27 # for easier use, set to same range as under macvlan (192 to 224 here)
-          gateway: 10.0.10.1 # for easier use, set to same last number as your router (1)
+#   vlan_bridge:
+#     name: docker_vlan_bridge
+#     driver: bridge
+#     enable_ipv6: false
+#     ipam:
+#       config:
+#         - subnet: 10.0.10.0/24 # subnet for all containers
+#           ip_range: 10.0.10.0/27 # for easier use, set to same range as under macvlan (192 to 224 here)
+#           gateway: 10.0.10.1 # for easier use, set to same last number as your router (1)
