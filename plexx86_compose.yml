@@ -14,6 +14,8 @@ services:
     volumes:
       - plex_config:/config
       - /media:/data
+    ports:
+      - 32400:32400
     restart: unless-stopped
     # networks:
     #   docker_macvlan:
@@ -34,6 +36,8 @@ services:
     volumes:
       - radarr_config:/config
       - /media:/data
+    ports:
+      - 7878:7878
     restart: unless-stopped
     # networks:
     #   docker_macvlan:
@@ -78,6 +82,8 @@ services:
     volumes:
       - jackett_config:/config
       - /media/downloads/torrents:/data/downloads/torrents
+    ports:
+      - 9117:9117
     restart: unless-stopped
     # networks:
     #   docker_macvlan:
