@@ -55,7 +55,7 @@ services:
       - sonarr_config:/config
       - /media:/data
     ports:
-      - 8989:8989
+      - 8991:8989
     restart: unless-stopped
     # networks:
     #   docker_macvlan:
@@ -92,7 +92,7 @@ services:
       - PUID=1001
       - PGID=1001
       - TZ=Canada/Pacific
-      - WEBUI_PORT=8989
+      - WEBUI_PORT=8990
       - TORRENTING_PORT=6881
     group_add:
       - "1001"
@@ -100,7 +100,7 @@ services:
       - qbit_config:/config
       - /media/downloads/torrents:/data/downloads/torrents
     ports:
-      - 8989:8989
+      - 8990:8989
       - 6881:6881
       - 6881:6881/udp
     restart: unless-stopped
