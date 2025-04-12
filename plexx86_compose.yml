@@ -66,6 +66,19 @@ services:
     #       ipv4_address: 10.0.1.22
     #   docker_vlan_bridge:
     #       ipv4_address: 10.0.10.22
+  lidarr:
+    image: lscr.io/linuxserver/lidarr:amd64-latest
+    container_name: lidarr
+    environment:
+      - PUID=1001
+      - PGID=1001
+      - TZ=Canada/Pacific
+    volumes:
+      - lidarr_config:/config
+      - /media:/data
+    ports:
+      - 8686:8686
+    restart: unless-stopped
 
   jackett:
     image: lscr.io/linuxserver/jackett:amd64-latest
