@@ -136,6 +136,8 @@ volumes:
     name: radarr_config
   sonarr_config:
     name: sonarr_config
+  lidarr_config:
+    name: lidarr_config
   jackett_config:
     name: jackett_config
   qbit_config:
