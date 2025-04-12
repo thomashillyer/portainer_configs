@@ -142,6 +142,19 @@ services:
     #   docker_vlan_bridge:
     #       ipv4_address: 10.0.10.21
 
+  overseerr:
+    image: lscr.io/linuxserver/overseerr:latest
+    container_name: overseerr
+    environment:
+      - PUID=1001
+      - PGID=1001
+      - TZ=Canada/Pacific
+    volumes:
+      - overseerr_config:/config
+    ports:
+      - 5055:5055
+    restart: unless-stopped
+
 volumes:
   plex_config:
     name: plex_config
@@ -155,6 +168,8 @@ volumes:
     name: jackett_config
   prowlarr_config:
     name: prowlarr_config
+  overseerr_config:
+    name: overseerr_config
   qbit_config:
     name: qbit_config
 
