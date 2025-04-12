@@ -103,7 +103,20 @@ services:
     #       ipv4_address: 10.0.1.14
     #   docker_vlan_bridge:
     #       ipv4_address: 10.0.10.14
-          
+
+  prowlarr:
+    image: lscr.io/linuxserver/prowlarr:latest
+    container_name: prowlarr
+    environment:
+      - PUID=1001
+      - PGID=1001
+      - TZ=Canada/Pacific
+    volumes:
+      - prowlarr_config:/config
+    ports:
+      - 9696:9696
+    restart: unless-stopped
+    
   qbittorrent:
     image: lscr.io/linuxserver/qbittorrent:amd64-latest
     container_name: qbittorrent
@@ -140,6 +153,8 @@ volumes:
     name: lidarr_config
   jackett_config:
     name: jackett_config
+  prowlarr_config:
+    name: prowlarr_config
   qbit_config:
     name: qbit_config
 
