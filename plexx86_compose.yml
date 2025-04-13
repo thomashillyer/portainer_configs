@@ -105,6 +105,9 @@ services:
   lidatube:
     image: thewicklowwolf/lidatube:latest
     container_name: lidatube
+    environment:
+      - PUID=1001
+      - PGID=1001
     volumes:
       - lidatube_config:/lidatube/config
       - /media/lidatube:/lidatube/downloads
