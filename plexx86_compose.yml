@@ -1,22 +1,24 @@
 version: "3"
 services:
-  plex:
-    image:  linuxserver/plex:amd64-latest
-    container_name: plex
-    hostname: Plex
-    environment:
-      - PUID=1001
-      - PGID=1001
-      - VERSION=docker
-      - PLEX_CLAIM=claim-oxSE5PEvCDjzFatfVqAx
-    group_add:
-      - "1001"
-    volumes:
-      - plex_config:/config
-      - /media:/data
-    ports:
-      - 32400:32400
-    restart: unless-stopped
+  ####
+  # players
+  # plex:
+  #   image:  linuxserver/plex:amd64-latest
+  #   container_name: plex
+  #   hostname: Plex
+  #   environment:
+  #     - PUID=1001
+  #     - PGID=1001
+  #     - VERSION=docker
+  #     - PLEX_CLAIM=claim-oxSE5PEvCDjzFatfVqAx
+  #   group_add:
+  #     - "1001"
+  #   volumes:
+  #     - plex_config:/config
+  #     - /media:/data
+  #   ports:
+  #     - 32400:32400
+  #   restart: unless-stopped
     # networks:
     #   docker_macvlan:
     #       ipv4_address: 10.0.1.10
@@ -39,7 +41,8 @@ services:
       - 7359:7359/udp #optional
       - 1900:1900/udp #optional
     restart: unless-stopped
-
+  ####
+  # movies
   radarr:
     image: lscr.io/linuxserver/radarr:amd64-latest
     container_name: radarr
@@ -61,7 +64,8 @@ services:
     #       ipv4_address: 10.0.1.12
     #   docker_vlan_bridge:
     #       ipv4_address: 10.0.10.12
-
+  ####
+  # tv
   sonarr:
     image: lscr.io/linuxserver/sonarr:amd64-latest
     container_name: sonarr
@@ -83,6 +87,8 @@ services:
     #       ipv4_address: 10.0.1.22
     #   docker_vlan_bridge:
     #       ipv4_address: 10.0.10.22
+  ####
+  # music/audio
   lidarr:
     image: lscr.io/linuxserver/lidarr:amd64-latest
     container_name: lidarr
@@ -96,7 +102,18 @@ services:
     ports:
       - 8686:8686
     restart: unless-stopped
-
+  lidatube:
+    image: thewicklowwolf/lidatube:latest
+    container_name: lidatube
+    volumes:
+      - lidatube_config:/lidatube/config
+      - /media/lidatube:/lidatube/downloads
+      - /etc/localtime:/etc/localtime:ro
+    ports:
+      - 5000:5000
+    restart: unless-stopped
+  ####
+  # indexers/trackers
   jackett:
     image: lscr.io/linuxserver/jackett:amd64-latest
     container_name: jackett
@@ -120,7 +137,6 @@ services:
     #       ipv4_address: 10.0.1.14
     #   docker_vlan_bridge:
     #       ipv4_address: 10.0.10.14
-
   prowlarr:
     image: lscr.io/linuxserver/prowlarr:latest
     container_name: prowlarr
@@ -133,7 +149,9 @@ services:
     ports:
       - 9696:9696
     restart: unless-stopped
-    
+
+  ####
+  # downloader
   qbittorrent:
     image: lscr.io/linuxserver/qbittorrent:amd64-latest
     container_name: qbittorrent
@@ -159,6 +177,8 @@ services:
     #   docker_vlan_bridge:
     #       ipv4_address: 10.0.10.21
 
+  ####
+  # requesters
   overseerr:
     image: lscr.io/linuxserver/overseerr:latest
     container_name: overseerr
@@ -196,6 +216,8 @@ volumes:
     name: sonarr_config
   lidarr_config:
     name: lidarr_config
+  lidatube_config:
+    name: lidatube_config
   jackett_config:
     name: jackett_config
   prowlarr_config:
