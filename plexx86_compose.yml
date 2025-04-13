@@ -26,8 +26,8 @@ services:
     image: lscr.io/linuxserver/jellyfin:latest
     container_name: jellyfin
     environment:
-      - PUID=1000
-      - PGID=1000
+      - PUID=1001
+      - PGID=1001
       - TZ=Etc/UTC
       # - JELLYFIN_PublishedServerUrl=http://192.168.0.5 #optional
     volumes:
@@ -171,7 +171,20 @@ services:
     ports:
       - 5055:5055
     restart: unless-stopped
-
+  jellyseerr:
+    image: fallenbagel/jellyseerr:latest
+    container_name: jellyseerr
+    environment:
+      - PUID=1001
+      - PGID=1001
+      - LOG_LEVEL=debug
+      - TZ=Canada/Pacific
+    ports:
+        - 5051:5055
+    volumes:
+        - jellyseerr_config:/app/config
+    restart: unless-stopped
+     
 volumes:
   plex_config:
     name: plex_config
@@ -189,6 +202,8 @@ volumes:
     name: prowlarr_config
   overseerr_config:
     name: overseerr_config
+  jellyseerr_config:
+    name: jellyseerr_config
   qbit_config:
     name: qbit_config
 
