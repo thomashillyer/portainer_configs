@@ -110,7 +110,7 @@ services:
       - PGID=1001
     volumes:
       - lidatube_config:/lidatube/config
-      - /media/lidatube:/lidatube/downloads
+      - /media/music:/lidatube/downloads
       - /etc/localtime:/etc/localtime:ro
     ports:
       - 5000:5000
