@@ -32,6 +32,8 @@ services:
       - PGID=1001
       - TZ=Etc/UTC
       # - JELLYFIN_PublishedServerUrl=http://192.168.0.5 #optional
+    devices:
+      - /dev/dri/renderD128:/dev/dri/renderD128
     volumes:
       - jellyfin_config:/config
       - /media:/data
