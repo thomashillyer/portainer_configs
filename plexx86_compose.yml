@@ -31,6 +31,7 @@ services:
       - PUID=1001
       - PGID=1001
       - TZ=Etc/UTC
+      - DOCKER_MODS=linuxserver/mods:jellyfin-opencl-intel
       # - JELLYFIN_PublishedServerUrl=http://192.168.0.5 #optional
     devices:
       - /dev/dri/renderD128:/dev/dri/renderD128
