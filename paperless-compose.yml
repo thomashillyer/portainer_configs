@@ -61,7 +61,8 @@ services:
       - data:/usr/src/paperless/data
       - media:/usr/src/paperless/media
       - ./export:/usr/src/paperless/export
-      - ./consume:/usr/src/paperless/consume
+      # - ./consume:/usr/src/paperless/consume
+      - /srv/samba/share/:/usr/src/paperless/consume
     env_file: paperless.env
     environment:
       PAPERLESS_REDIS: redis://broker:6379
