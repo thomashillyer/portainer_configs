@@ -198,8 +198,6 @@ services:
     restart: unless-stopped
      
 volumes:
-  plex_config:
-    name: plex_config
   jellyfin_config:
     name: jellyfin_config
   radarr_config:
