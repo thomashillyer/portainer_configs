@@ -134,8 +134,8 @@ services:
       - PUID=1001
       - PGID=1001
       - TZ=Canada/Pacific
-      - NZBGET_USER=nzbget #optional
-      - NZBGET_PASS=changingpassword #optional
+      # - NZBGET_USER=nzbget #optional
+      # - NZBGET_PASS=changingpassword #optional
     volumes:
       - nzbget_config:/config
       - /mnt/storage/media/downloads/nzb:/downloads/nzb 
