@@ -138,7 +138,7 @@ services:
       # - NZBGET_PASS=changingpassword #optional
     volumes:
       - nzbget_config:/config
-      - /mnt/storage/media/downloads/nzb:/downloads/nzb 
+      - /mnt/storage/media/downloads/usenet:/downloads/usenet 
     ports:
       - 6789:6789
     restart: unless-stopped
